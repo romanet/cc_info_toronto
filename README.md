@@ -25,10 +25,8 @@ WITH dd AS (
         SELECT *
           FROM (VALUES ('monday', 0), ('tuesday', 1), ('wednesday',2), ('thursday',3), ('friday',4), ('saturday',5), ('sunday',6)) aa(day_of_week, num)
        ),  my_loc AS (
-        SELECT 43.7664411 lat,
-               -79.4376722 lng,
-               43.837208 lat1,
-               -79.508278 lng1
+        SELECT 45.7764411 lat,
+               -75.4786722 lng
        ),
        base AS (
         SELECT round(acos(sin(my_loc.lat::float * (pi()/180)) * sin(c.lat::float * (pi()/180)) + cos(my_loc.lat::float *(pi()/180)) * cos(c.lat::float * (pi()/180)) *cos(c.lng::float*(pi()/180)-my_loc.lng::float*(pi()/180)))*6371,1) AS distance_km,
