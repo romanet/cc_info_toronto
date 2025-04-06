@@ -2,6 +2,18 @@
 
 go build
 
+
+# Run the code behind proxy
+
+## Windows
+
+set HTTPS_PROXY=http://proxy_host:proxy_port
+cc-info-toronto.exe --db-path cc-info-toronto.db
+
+## other 
+
+HTTPS_PROXY=http://proxy_host:proxy_port ./cc-info-toronto --db-path cc-info-toronto.db
+
 # Duckdb usage (supports PIVOT)
 
 ```sql
@@ -50,6 +62,7 @@ WITH dd AS (
         join my_loc ON 1=1
          WHERE sport = 'Table Tennis'
            AND age not like '%60%'
+           AND scheduler_day >= today()::date
          ORDER BY scheduler_day
        ) pivot base
     ON scheduler_day USING max(program_time) order by distance_km ;
