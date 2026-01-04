@@ -6,8 +6,8 @@ import (
 	"log"
 	"os"
 
+	_ "github.com/duckdb/duckdb-go/v2"
 	"github.com/jmoiron/sqlx"
-	_ "github.com/mattn/go-sqlite3"
 )
 
 var logger = log.New(os.Stdout, "", log.LstdFlags|log.Lshortfile)

@@ -19,7 +19,7 @@ var (
 
 func main() {
 	defaultDbFilePath, _ := filepath.Abs(conf.GlobConf.DEFAULT_DB_FILE)
-	var dbPath = flag.String("db-path", defaultDbFilePath, "path to SQLite file")
+	var dbPath = flag.String("db-path", defaultDbFilePath, "path to DuckDB file")
 	flag.Parse()
 	absDbPath, _ := filepath.Abs(*dbPath)
 	logger.Println("Database path", absDbPath)
