@@ -2,36 +2,30 @@
 
 go build
 
+# Usage 
 
-# Run the code behind proxy
+```powershell
+ cc-info-toronto.org.exe --help 
+Usage of C:\Projects\romanet-gh\cc_info_toronto\cc-info-toronto.org.exe:
+  -db-path string
+        path to DuckDB file (default "C:\\...\\cc-info-toronto.db")
+```
 
-## Windows
+## Run the code behind proxy
+
+### Windows
 
 set HTTPS_PROXY=http://proxy_host:proxy_port
 cc-info-toronto.exe --db-path cc-info-toronto.db
 
-## other 
+### other 
 
 HTTPS_PROXY=http://proxy_host:proxy_port ./cc-info-toronto --db-path cc-info-toronto.db
 
-# Duckdb usage (supports PIVOT)
+
+## Duckdb (using DBeaver)
 
 ```sql
-
-INSTALL sqlite;
-
-LOAD sqlite;
-
---SELECT * FROM sqlite_scan('C:\\Projects\\go_projects\\cc_info_toronto\\cc_sqlite.db', 'centres');
-
-ATTACH 'C:\\Projects\\go_projects\\cc_info_toronto\\cc-info-toronto.db' AS test (TYPE sqlite);
--- The table "tbl_name" can now be queried as if it is a regular table
- 
--- Switch the active database to "test"
-USE test;
--- List all tables in the file
-SHOW TABLES;
- 
 
 WITH dd AS (
         SELECT *
@@ -66,6 +60,5 @@ WITH dd AS (
          ORDER BY scheduler_day
        ) pivot base
     ON scheduler_day USING max(program_time) order by distance_km ;
-
 
 ```
