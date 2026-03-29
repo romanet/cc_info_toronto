@@ -5,15 +5,10 @@ package centre
 import (
 	"encoding/json"
 	"log"
-	"os"
 
 	"cc-info-toronto.org/conf"
 	"cc-info-toronto.org/db_utils"
 	"cc-info-toronto.org/http_utils"
-)
-
-var (
-	logger = log.New(os.Stdout, "", log.LstdFlags|log.Lshortfile)
 )
 
 type Centre struct {
@@ -63,9 +58,9 @@ func GetCenters(ce chan Centre, db db_utils.Db) {
 
 		//if i > 4 {			break		} // for debigging
 	}
-	logger.Println("SaveCentresToDb - start")
+	log.Println("SaveCentresToDb - start")
 	SaveCentresToDb(db, ceRecords)
-	logger.Println("SaveCentresToDb - end")
+	log.Println("SaveCentresToDb - end")
 	close(ce)
 
 }
