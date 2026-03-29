@@ -10,20 +10,17 @@ import (
 	"cc-info-toronto.org/conf"
 	"cc-info-toronto.org/db_utils"
 	"cc-info-toronto.org/programs"
-	_ "github.com/duckdb/duckdb-go/v2"
-)
-
-var (
-	//buf    bytes.Buffer
-	logger = log.New(os.Stdout, "", log.LstdFlags|log.Lshortfile)
 )
 
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	log.SetOutput(os.Stdout)
+
 	defaultDbFilePath, _ := filepath.Abs(conf.GlobConf.DEFAULT_DB_FILE)
 	var dbPath = flag.String("db-path", defaultDbFilePath, "path to DuckDB file")
 	flag.Parse()
 	absDbPath, _ := filepath.Abs(*dbPath)
-	logger.Println("Database path", absDbPath)
+	log.Println("Database path", absDbPath)
 
 	db := db_utils.NewDb(absDbPath)
 	db.InitDB()
@@ -38,9 +35,9 @@ func main() {
 		tmp := (*db_utils.ProgramSchedulerRecord)(&v)
 		PrArray = append(PrArray, *tmp)
 	}
-	logger.Println("Before Saving Programs")
+	log.Println("Before Saving Programs")
 	db.AddProgramSchedulerRecords(PrArray)
-	logger.Println("Saved Programs")
-	logger.Println("Done")
+	log.Println("Saved Programs")
+	log.Println("Done")
 
 }

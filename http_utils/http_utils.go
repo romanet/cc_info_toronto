@@ -4,13 +4,10 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"
 )
 
-var logger = log.New(os.Stdout, "", log.LstdFlags|log.Lshortfile)
-
 func ReadURL(url string) ([]byte, error) {
-	logger.Println(url)
+	log.Println(url)
 	resp, err := http.Get(url)
 
 	if err != nil {

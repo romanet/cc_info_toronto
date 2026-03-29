@@ -16,11 +16,11 @@ import (
 	"cc-info-toronto.org/http_utils"
 )
 
-var (
+/* var (
 	buf    bytes.Buffer
 	logger = log.New(&buf, "logger: ", log.LstdFlags|log.Lshortfile)
 	//logger = log.New(os.Stdout, "logger: ", log.LstdFlags|log.Lshortfile)
-)
+) */
 
 type CentreInfo struct {
 	CentreId int
@@ -112,9 +112,10 @@ func GetPrograms(ce chan centre.Centre, pr chan ProgramSchedulerRecordJson) {
 		var f CentreInfo
 		err = json.Unmarshal(utf8Data, &f)
 		if err != nil {
-			logger.Println("http_utils.ReadURL(\"", url, "\")")
-			logger.Println("ERROR respData=", string(respData))
-			logger.Println("ERROR utf8Data=", string(utf8Data))
+			//log.Println("ERROR http_utils.ReadURL(\"", url, "\")")
+			//log.Println("ERROR respData=", string(respData))
+			//log.Println("ERROR utf8Data=", string(utf8Data))
+			log.Println("Skipping centre", centre.ID, "due to error in json.Unmarshal, URL:", url.String())
 			continue
 		}
 		//check(err)
@@ -123,15 +124,15 @@ func GetPrograms(ce chan centre.Centre, pr chan ProgramSchedulerRecordJson) {
 
 		for week_indx := range f.Weeks {
 			f.Weeks[week_indx].CentreId = centre.ID
-			logger.Println("Week:", f.Weeks[week_indx])
+			//logger.Println("Week:", f.Weeks[week_indx])
 			url_prog := new(strings.Builder)
 			err = tmpl_prog.Execute(url_prog, f.Weeks[week_indx])
 			check(err)
 			if f.Weeks[week_indx].HasPrograms /* == "true"*/ {
-				logger.Println("http_utils.ReadURL(\"", url_prog.String(), "\")")
+				//logger.Println("http_utils.ReadURL(\"", url_prog.String(), "\")")
 				respData, err := http_utils.ReadURL(url_prog.String())
 				check(err)
-				logger.Println("respData=", string(respData))
+				//logger.Println("respData=", string(respData))
 				utf8Data, err := UTF16BytesToUTF8(respData)
 				check(err)
 				var wps WeeklyPrograms
@@ -139,8 +140,8 @@ func GetPrograms(ce chan centre.Centre, pr chan ProgramSchedulerRecordJson) {
 				check(err)
 				for wps_indx := range wps.Programs {
 					wps.Programs[wps_indx].CentreId = f.Weeks[week_indx].CentreId
-					ww, _ := json.Marshal(wps.Programs[wps_indx])
-					logger.Println("WeeklyProgram=", string(ww))
+					//ww, _ := json.Marshal(wps.Programs[wps_indx])
+					//logger.Println("WeeklyProgram=", string(ww))
 					for days_indx := range wps.Programs[wps_indx].Days {
 						wps.Programs[wps_indx].Days[days_indx].CentreId = wps.Programs[wps_indx].CentreId
 						wps.Programs[wps_indx].Days[days_indx].WeekStartDate = f.Weeks[week_indx].WeekStartDate
@@ -162,20 +163,7 @@ func GetPrograms(ce chan centre.Centre, pr chan ProgramSchedulerRecordJson) {
 			}
 
 		}
-
-		//centre.ID
 	}
-
-	//utf8Data, err := utf16ToUTF8(respData)
-	//fmt.Println("utf8Data", string(utf8Data))
-	// s := strings.NewReader(respData.Len())
-	//utf8Data := cpd.DecodeUTF16(s.)
-	//utf8Data, err := utf16ToUTF8(respData)
-
-	//utf8Data, err := ReadFileUTF16(respData)
-
-	//check(err)
-
 	close(pr)
 
 }

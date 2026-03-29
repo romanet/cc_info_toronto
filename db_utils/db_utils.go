@@ -4,13 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"os"
 
 	_ "github.com/duckdb/duckdb-go/v2"
 	"github.com/jmoiron/sqlx"
 )
-
-var logger = log.New(os.Stdout, "", log.LstdFlags|log.Lshortfile)
 
 type ProgramSchedulerRecord struct {
 	CentreId        int    `db:"centre_id"`
@@ -107,17 +104,28 @@ func (db Db) AddCentresRecords(tmp []CentreRecord) {
 	}
 }
 
+/*
 func (db Db) AddProgramSchedulerRecords(tmp []ProgramSchedulerRecord) {
 	for i := range len(tmp) {
 		_, err := db.Conn.NamedExec(DbInsert, tmp[i])
 		if err != nil {
-			logger.Println("ERROR:", DbInsert)
+			log.Println("ERROR:", DbInsert)
 			vv, _ := json.Marshal(tmp[i])
-			logger.Println("ERROR:", i, ")", string(vv))
+			log.Println("ERROR:", i, ")", string(vv))
 			panic(err)
 		}
 	}
 
+} */
+
+func (db Db) AddProgramSchedulerRecords(tmp []ProgramSchedulerRecord) {
+	_, err := db.Conn.NamedExec(DbInsert, tmp)
+	if err != nil {
+		log.Println("ERROR:", DbInsert)
+		vv, _ := json.Marshal(tmp)
+		log.Println("ERROR:", string(vv))
+		panic(err)
+	}
 }
 
 func (db Db) Save() {
