@@ -1,5 +1,6 @@
 package conf
 
+// module  cc_info_toronto/conf
 type Conf struct {
 	DEFAULT_DB_FILE                   string
 	CENTERS_LISTING_URL               string
