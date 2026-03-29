@@ -82,7 +82,7 @@ type Db struct {
 }
 
 func NewDb(dbPath string) Db {
-	mydb, err := sqlx.Open("sqlite3", dbPath)
+	mydb, err := sqlx.Open("duckdb", dbPath)
 	if err != nil {
 		panic(err)
 	}

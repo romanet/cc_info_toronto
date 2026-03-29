@@ -17,6 +17,7 @@ require (
 	cc-info-toronto.org/conf v0.0.0-00010101000000-000000000000
 	cc-info-toronto.org/db_utils v0.0.0-00010101000000-000000000000
 	cc-info-toronto.org/programs v0.0.0-00010101000000-000000000000
+	github.com/duckdb/duckdb-go/v2 v2.5.4
 )
 
 require (
@@ -30,7 +31,6 @@ require (
 	github.com/duckdb/duckdb-go-bindings/windows-amd64 v0.1.24 // indirect
 	github.com/duckdb/duckdb-go/arrowmapping v0.0.27 // indirect
 	github.com/duckdb/duckdb-go/mapping v0.0.27 // indirect
-	github.com/duckdb/duckdb-go/v2 v2.5.4 // indirect
 	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
 	github.com/goccy/go-json v0.10.5 // indirect
 	github.com/google/flatbuffers v25.9.23+incompatible // indirect

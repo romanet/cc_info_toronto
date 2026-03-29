@@ -38,6 +38,7 @@ WITH dd AS (
         SELECT round(acos(sin(my_loc.lat::float * (pi()/180)) * sin(c.lat::float * (pi()/180)) + cos(my_loc.lat::float *(pi()/180)) * cos(c.lat::float * (pi()/180)) *cos(c.lng::float*(pi()/180)-my_loc.lng::float*(pi()/180)))*6371,1) AS distance_km,
                s.centre_id,
                s.week_start_date::DATE + dd.num scheduler_day,
+               dd.day_of_week,
                s.sport,
                age,
                program_time,
@@ -59,6 +60,6 @@ WITH dd AS (
            AND scheduler_day >= today()::date
          ORDER BY scheduler_day
        ) pivot base
-    ON scheduler_day USING max(program_time) order by distance_km ;
+    ON scheduler_day || '-' || substr(day_of_week, 0 , 4) USING max(program_time) order by distance_km ;
 
 ```
