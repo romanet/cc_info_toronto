@@ -10,6 +10,7 @@ import (
 	"cc-info-toronto.org/conf"
 	"cc-info-toronto.org/db_utils"
 	"cc-info-toronto.org/programs"
+	_ "github.com/duckdb/duckdb-go/v2"
 )
 
 var (
