@@ -1,6 +1,6 @@
 module cc-info-toronto.org
 
-go 1.25.0
+go 1.25.1
 
 replace cc-info-toronto.org/centre => ./centre
 
