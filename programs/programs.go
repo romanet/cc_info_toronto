@@ -1,15 +1,11 @@
 package programs
 
 import (
-	"bytes"
 	"encoding/json"
-	"io"
 	"log"
 	"strings"
 	"text/template"
 
-	"golang.org/x/text/encoding/unicode"
-	"golang.org/x/text/transform"
 
 	"cc-info-toronto.org/centre"
 	"cc-info-toronto.org/conf"
@@ -72,21 +68,7 @@ func check(e error) {
 		panic(e)
 	}
 }
-
-func UTF16BytesToUTF8(raw []byte) ([]byte, error) {
-
-	// Make an tranformer that converts MS-Win default to UTF8:
-	win16be := unicode.UTF16(unicode.BigEndian, unicode.IgnoreBOM)
-	// Make a transformer that is like win16be, but abides by BOM:
-	utf16bom := unicode.BOMOverride(win16be.NewDecoder())
-
-	// Make a Reader that uses utf16bom:
-	unicodeReader := transform.NewReader(bytes.NewReader(raw), utf16bom)
-
-	// decode and print:
-	decoded, err := io.ReadAll(unicodeReader)
-	return decoded, err
-}
+ 
 
 func GetPrograms(ce chan centre.Centre, pr chan ProgramSchedulerRecordJson) {
 	//logger.SetOutput(os.Stdout)
@@ -105,12 +87,10 @@ func GetPrograms(ce chan centre.Centre, pr chan ProgramSchedulerRecordJson) {
 		check(err)
 
 		//logger.Println("respData=", string(respData))
-
-		utf8Data, err := UTF16BytesToUTF8(respData)
-		check(err)
+ 
 
 		var f CentreInfo
-		err = json.Unmarshal(utf8Data, &f)
+		err = json.Unmarshal(respData, &f)
 		if err != nil {
 			//log.Println("ERROR http_utils.ReadURL(\"", url, "\")")
 			//log.Println("ERROR respData=", string(respData))
@@ -133,10 +113,10 @@ func GetPrograms(ce chan centre.Centre, pr chan ProgramSchedulerRecordJson) {
 				respData, err := http_utils.ReadURL(url_prog.String())
 				check(err)
 				//logger.Println("respData=", string(respData))
-				utf8Data, err := UTF16BytesToUTF8(respData)
-				check(err)
+				//utf8Data, err := UTF16BytesToUTF8(respData)
+				//check(err)
 				var wps WeeklyPrograms
-				err = json.Unmarshal(utf8Data, &wps)
+				err = json.Unmarshal(respData, &wps)
 				check(err)
 				for wps_indx := range wps.Programs {
 					wps.Programs[wps_indx].CentreId = f.Weeks[week_indx].CentreId
