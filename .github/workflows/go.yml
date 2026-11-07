@@ -38,7 +38,7 @@ jobs:
 
     - name: Cross-Compile Binary
       env:
-        CGO_ENABLED: 0
+        CGO_ENABLED: 1
         GOOS: ${{ matrix.goos }}
         GOARCH: ${{ matrix.goarch }}
       run: |
