@@ -1,6 +1,6 @@
 module cc-info-toronto.org/programs
 
-go 1.25.0
+go 1.25.1
 
 replace cc-info-toronto.org/conf => ../conf
 
