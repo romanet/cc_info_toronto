@@ -1,3 +1,7 @@
+# Download Latest 
+
+[cc_info_toronto-windows-amd64.exe.zip](https://github.com/romanet/cc_info_toronto/actions/runs/42400466291/artifacts/13584678280)
+
 # Make executable 
 
 go build
