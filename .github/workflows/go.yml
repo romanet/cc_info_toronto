@@ -16,9 +16,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - goos: linux
-            goarch: amd64
-            output_name: cc_info_toronto-linux-amd64
           - goos: windows
             goarch: amd64
             output_name: cc_info_toronto-windows-amd64.exe
